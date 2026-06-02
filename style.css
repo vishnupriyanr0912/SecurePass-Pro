@@ -1,0 +1,252 @@
+/* GLOBAL */
+* {
+    transition: all 0.3s ease-in-out;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* ================= FLOATING SHAPES ================= */
+.bg-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.shape {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.6;
+    animation: float 12s infinite alternate ease-in-out;
+}
+
+.shape1 {
+    width: 300px;
+    height: 300px;
+    background: #6ea8fe;
+    top: 10%;
+    left: 10%;
+}
+
+.shape2 {
+    width: 250px;
+    height: 250px;
+    background: #b388ff;
+    bottom: 10%;
+    right: 10%;
+}
+
+.shape3 {
+    width: 200px;
+    height: 200px;
+    background: #8ec5fc;
+    top: 50%;
+    left: 50%;
+}
+
+/* Dark mode shape colors (blue-grey aesthetic) */
+body.dark .shape1 {
+    background: #334155; /* slate */
+}
+
+body.dark .shape2 {
+    background: #1e40af; /* deep muted blue */
+}
+
+body.dark .shape3 {
+    background: #0ea5e9; /* soft cyan-blue */
+}
+
+body.dark .shape {
+    opacity: 0.35;
+}
+
+/* Floating Animation */
+@keyframes float {
+    from { transform: translateY(0px); }
+    to { transform: translateY(-40px); }
+}
+
+/* ================= CARD ================= */
+.password-card {
+    position: relative;
+    z-index: 2;
+    width: 420px;
+    border-radius: 24px;
+    padding: 30px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    animation: fadeIn 1s ease;
+}
+
+/* Fade-in */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ================= LIGHT THEME ================= */
+body.light {
+    background: linear-gradient(135deg, #5f9cff, #a18cd1, #c2e9fb);
+    background-size: 300% 300%;
+    animation: gradientMove 12s ease infinite;
+}
+
+body.light .card {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    color: #1f2d3d;
+}
+
+/* ================= DARK THEME ================= */
+/* ================= DARK THEME ================= */
+/* ================= DARK THEME ================= */
+/* ================= DARK THEME ================= */
+body.dark {
+    background: linear-gradient(
+        135deg,
+        #0f172a,   /* deep blue-black */
+        #1e293b,   /* slate blue-grey */
+        #111827,   /* dark grey-blue */
+        #020617    /* near black */
+    );
+    background-size: 300% 300%;
+    animation: gradientMove 14s ease infinite;
+}
+
+body.dark .card {
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+/* ================= INPUT ================= */
+input {
+    border-radius: 12px !important;
+}
+
+body.light input {
+    background: rgba(255, 255, 255, 0.6);
+    border: none;
+}
+
+body.dark input {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: none;
+}
+
+body.dark input::placeholder {
+    color: #ddd;
+}
+
+/* ================= PROGRESS ================= */
+.progress {
+    height: 8px;
+    border-radius: 10px;
+}
+
+body.light .progress {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+body.dark .progress {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Glow in dark */
+body.dark .progress-bar.bg-success {
+    box-shadow: 0 0 15px #00e676;
+}
+
+body.dark .progress-bar.bg-warning {
+    box-shadow: 0 0 15px #ffb300;
+}
+
+body.dark .progress-bar.bg-danger {
+    box-shadow: 0 0 15px #ff5252;
+}
+
+/* ================= VALIDATION ================= */
+.valid {
+    color: #00e676;
+}
+
+.invalid {
+    color: #ff5252;
+}
+
+/* ================= STRENGTH ================= */
+#strength.strong {
+    color: #00e676;
+}
+
+#strength.medium {
+    color: #ffb300;
+}
+
+#strength.weak {
+    color: #ff5252;
+}
+
+/* ================= BUTTON ================= */
+.theme-toggle {
+    border: none;
+    background: transparent;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+/* ================= GRADIENT ================= */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ================= LOCK ANIMATION ================= */
+#lockIcon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.locked {
+    transform: scale(1.2) rotate(10deg);
+}
+
+/* ================= FIX INPUT FOCUS ================= */
+
+/* Remove default Bootstrap white focus */
+input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+/* LIGHT THEME - keep glass look */
+body.light input:focus {
+    background: rgba(255, 255, 255, 0.6) !important;
+    border: none;
+}
+
+/* DARK THEME - keep dark glass look */
+body.dark input:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: white;
+    border: none;
+}
+
+/* Light focus glow */
+body.light input:focus {
+    box-shadow: 0 0 10px rgba(161, 140, 209, 0.5);
+}
+
+/* Dark focus glow */
+body.dark input:focus {
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.5);
+}
