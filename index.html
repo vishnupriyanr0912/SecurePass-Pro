@@ -1,58 +1,264 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <title>Password Strength Checker</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SecurePass Pro — Dashboard</title>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-
-    <link rel="stylesheet" href="style.css">
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!-- Custom Styles -->
+  <link href="style.css" rel="stylesheet" />
 </head>
+<body>
 
-<body class="light d-flex justify-content-center align-items-center">
+  <!-- ============================================================
+       TOPBAR
+  ============================================================ -->
+  <header class="topbar">
+    <a class="topbar-brand" href="#">
+      <div class="brand-icon"><i class="bi bi-shield-lock-fill"></i></div>
+      <div>
+        <div class="brand-name">SecurePass Pro <span class="brand-badge">v2.0</span></div>
+      </div>
+    </a>
+    <div class="topbar-actions">
+      <button class="icon-btn" title="Settings"><i class="bi bi-sliders"></i></button>
+      <button class="icon-btn theme-toggle-btn" id="themeToggle" title="Toggle theme">
+        <i class="bi bi-sun-fill" id="themeIcon"></i>
+        <span id="themeLabel">Light</span>
+      </button>
+      <div class="avatar" title="Profile">SP</div>
+    </div>
+  </header>
 
-    <div class="card p-4 shadow-lg password-card">
+  <!-- ============================================================
+       MAIN DASHBOARD
+  ============================================================ -->
+  <main class="dashboard">
 
-        <!-- Theme Toggle -->
-        <div class="text-end mb-2">
-            <button id="themeToggle" class="theme-toggle">
-                🌙 
+    <!-- ROW 1 -->
+    <div class="section-label"><i class="bi bi-key-fill" style="color:var(--accent)"></i> Password Management</div>
+    <div class="row g-3 mb-3">
+
+      <!-- PASSWORD MANAGEMENT -->
+      <div class="col-12 col-lg-6">
+        <div class="glass-card">
+          <div class="card-header-row">
+            <div class="card-title">
+              <div class="card-icon" style="background:var(--accent-dim);color:var(--accent)"><i class="bi bi-key-fill"></i></div>
+              Password Input
+            </div>
+            <span id="charCountBadge" style="font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-muted);">0 chars</span>
+          </div>
+
+          <div class="pw-input-wrap">
+            <input type="password" class="pw-input" id="passwordInput" placeholder="Enter or generate a password…" autocomplete="off" spellcheck="false" />
+            <button class="pw-toggle" id="toggleVisibility" title="Show/hide password">
+              <i class="bi bi-eye" id="eyeIcon"></i>
             </button>
+          </div>
+
+          <button class="btn-generate mb-3" id="generateBtn">
+            <i class="bi bi-lightning-fill"></i> Generate Strong Password
+          </button>
+
+          <div class="strength-meter">
+            <div class="strength-label-row">
+              <span class="strength-label">Password Strength</span>
+              <span class="strength-value" id="strengthLabel" style="color:var(--text-muted)">—</span>
+            </div>
+            <div class="strength-track" id="strengthTrack">
+              <div class="strength-segment" id="seg1"></div>
+              <div class="strength-segment" id="seg2"></div>
+              <div class="strength-segment" id="seg3"></div>
+              <div class="strength-segment" id="seg4"></div>
+            </div>
+          </div>
         </div>
+      </div>
 
-        <h3 class="text-center mb-3">Password Checker!</h3>
+      <!-- SECURITY OVERVIEW -->
+      <div class="col-12 col-lg-6">
+        <div class="glass-card">
+          <div class="card-header-row">
+            <div class="card-title">
+              <div class="card-icon" style="background:var(--accent-2-dim);color:var(--accent-2)"><i class="bi bi-shield-check"></i></div>
+              Security Overview
+            </div>
+            <span id="secLevelBadge" style="font-size:0.7rem;font-weight:700;letter-spacing:0.05em;color:var(--text-muted);text-transform:uppercase;">—</span>
+          </div>
 
-        <!-- Password Input with Eye Icon -->
-        <div class="input-group mb-2">
-            <input type="password" id="password" class="form-control" placeholder="Enter Password">
-            <button class="btn btn-outline-secondary" id="togglePassword">
-                <i class="bi bi-eye"></i>
-            </button>
+          <div class="score-display">
+            <div class="score-ring-wrap">
+              <svg viewBox="0 0 100 100">
+                <circle class="score-ring-bg" cx="50" cy="50" r="45"/>
+                <circle class="score-ring-fill" id="scoreRing" cx="50" cy="50" r="45"/>
+              </svg>
+              <div class="score-number">
+                <span class="score-num" id="scoreNum">0</span>
+                <span class="score-denom">/100</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric-pill">
+              <div class="metric-pill-label">Crack Time</div>
+              <div class="metric-pill-value" id="crackTime">—</div>
+            </div>
+            <div class="metric-pill">
+              <div class="metric-pill-label">Entropy</div>
+              <div class="metric-pill-value" id="entropyVal">—</div>
+            </div>
+            <div class="metric-pill">
+              <div class="metric-pill-label">Length</div>
+              <div class="metric-pill-value" id="pwLength">—</div>
+            </div>
+            <div class="metric-pill">
+              <div class="metric-pill-label">Char Pool</div>
+              <div class="metric-pill-value" id="charPool">—</div>
+            </div>
+          </div>
         </div>
-
-        <!-- Strength Text -->
-        <div id="strength" class="fw-bold mb-2"></div>
-
-        <!-- Progress Bar -->
-        <div class="progress mb-3">
-            <div id="progressBar" class="progress-bar" role="progressbar"></div>
-        </div>
-
-        <!-- Conditions -->
-        <ul class="list-unstyled small">
-            <li id="length">Atleast 8 characters</li>
-            <li id="uppercase">One uppercase letter</li>
-            <li id="lowercase">One lowercase letter</li>
-            <li id="number">One number</li>
-            <li id="special">One special character</li>
-        </ul>
-
+      </div>
     </div>
 
-<script src="script.js"></script>
+    <!-- ROW 2 -->
+    <div class="section-label"><i class="bi bi-check2-circle" style="color:var(--success)"></i> Requirements & Suggestions</div>
+    <div class="row g-3 mb-3">
+
+      <!-- REQUIREMENTS -->
+      <div class="col-12 col-lg-6">
+        <div class="glass-card">
+          <div class="card-header-row">
+            <div class="card-title">
+              <div class="card-icon" style="background:var(--success-dim);color:var(--success)"><i class="bi bi-list-check"></i></div>
+              Password Requirements
+            </div>
+          </div>
+          <ul class="req-list" id="reqList">
+            <li class="req-item" id="req-length">
+              <div class="req-icon"><i class="bi bi-rulers"></i></div>
+              <span class="req-text">Minimum 8 characters</span>
+              <span class="req-badge req-badge-fail">Fail</span>
+            </li>
+            <li class="req-item" id="req-upper">
+              <div class="req-icon"><i class="bi bi-fonts"></i></div>
+              <span class="req-text">Uppercase letter (A–Z)</span>
+              <span class="req-badge req-badge-fail">Fail</span>
+            </li>
+            <li class="req-item" id="req-lower">
+              <div class="req-icon"><i class="bi bi-type-italic"></i></div>
+              <span class="req-text">Lowercase letter (a–z)</span>
+              <span class="req-badge req-badge-fail">Fail</span>
+            </li>
+            <li class="req-item" id="req-number">
+              <div class="req-icon"><i class="bi bi-123"></i></div>
+              <span class="req-text">Number (0–9)</span>
+              <span class="req-badge req-badge-fail">Fail</span>
+            </li>
+            <li class="req-item" id="req-special">
+              <div class="req-icon"><i class="bi bi-asterisk"></i></div>
+              <span class="req-text">Special character (!@#$…)</span>
+              <span class="req-badge req-badge-fail">Fail</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SUGGESTIONS -->
+      <div class="col-12 col-lg-6">
+        <div class="glass-card">
+          <div class="card-header-row">
+            <div class="card-title">
+              <div class="card-icon" style="background:var(--warning-dim);color:var(--warning)"><i class="bi bi-lightbulb-fill"></i></div>
+              Smart Suggestions
+            </div>
+          </div>
+          <div class="suggestions-list" id="suggestionsList">
+            <div class="empty-state">
+              <i class="bi bi-shield-slash"></i>
+              Enter a password to see suggestions
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 3 — ANALYTICS -->
+    <div class="section-label"><i class="bi bi-bar-chart-fill" style="color:var(--accent-2)"></i> Strength Analytics</div>
+    <div class="row g-3 mb-3">
+      <div class="col-12">
+        <div class="glass-card">
+          <div class="card-header-row">
+            <div class="card-title">
+              <div class="card-icon" style="background:var(--accent-2-dim);color:var(--accent-2)"><i class="bi bi-bar-chart-fill"></i></div>
+              Score Breakdown
+            </div>
+            <span style="font-size:0.72rem;color:var(--text-muted);">Per-category analysis</span>
+          </div>
+          <div class="chart-container">
+            <canvas id="strengthChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROW 4 — THREAT DETECTION -->
+    <div class="section-label"><i class="bi bi-radar" style="color:var(--danger)"></i> Threat Detection</div>
+    <div class="row g-3">
+      <div class="col-12 col-sm-6 col-xl-3">
+        <div class="threat-card threat-neutral" id="threatCommon">
+          <div class="threat-icon"><i class="bi bi-database-x"></i></div>
+          <div class="threat-title">Common Password</div>
+          <div class="threat-status">Analyzing…</div>
+          <div class="threat-msg">Checks against a list of the most commonly used passwords.</div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+        <div class="threat-card threat-neutral" id="threatKeyboard">
+          <div class="threat-icon"><i class="bi bi-keyboard"></i></div>
+          <div class="threat-title">Keyboard Pattern</div>
+          <div class="threat-status">Analyzing…</div>
+          <div class="threat-msg">Detects sequential keyboard patterns like qwerty, asdfgh, 123456.</div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+        <div class="threat-card threat-neutral" id="threatRepeated">
+          <div class="threat-icon"><i class="bi bi-repeat"></i></div>
+          <div class="threat-title">Repeated Characters</div>
+          <div class="threat-status">Analyzing…</div>
+          <div class="threat-msg">Detects repeated chars like aaaa, 1111, or password111.</div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+        <div class="threat-card threat-neutral" id="threatPersonal">
+          <div class="threat-icon"><i class="bi bi-person-bounding-box"></i></div>
+          <div class="threat-title">Personal Info</div>
+          <div class="threat-status">Analyzing…</div>
+          <div class="threat-msg">Detects common names and birth year patterns (e.g., 1990–2010).</div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- STATUS BAR -->
+  <div class="status-bar">
+    <div class="status-dot"></div>
+    <span>SecurePass Pro — All analysis runs locally in your browser</span>
+    <span style="margin-left:auto;">Built with ♥ for security</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  <script src="script.js"></script>
+
 </body>
 </html>
