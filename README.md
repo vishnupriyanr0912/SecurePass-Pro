@@ -6,7 +6,7 @@ A modern, dashboard-style **password strength analyzer** built for a Computer Sc
 
 ## 🚀 Live Demo
 
-> Deployed on GitHub Pages — \[View Live](#)
+> Deployed on GitHub Pages — \\\[View Live](https://vishnupriyanr0912.github.io/SecurePass-Pro/)
 
 \---
 
@@ -14,7 +14,7 @@ A modern, dashboard-style **password strength analyzer** built for a Computer Sc
 
 ```
 SecurePass-Pro/
-├── index.html     # Dashboard layout \& structure
+├── index.html     # Dashboard layout \\\& structure
 ├── style.css      # All styles, themes, and responsive layout
 ├── script.js      # All JavaScript logic and functionality
 └── README.md      # Project documentation
@@ -85,7 +85,7 @@ The security score is calculated as a weighted sum across 6 categories:
 |-|-|
 |Common Password|Exact match against a curated list of top passwords|
 |Keyboard Pattern|Substring match against common keyboard sequences|
-|Repeated Characters|Regex: `(.)\\1{2,}`|
+|Repeated Characters|Regex: `(.)\\\\1{2,}`|
 |Personal Information|Common first names + birth year pattern (1950–2029)|
 
 \---
